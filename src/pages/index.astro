@@ -1,0 +1,88 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import Pill from '../components/Pill.astro';
+import { experience, site } from '../data/site';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<Base title={`${site.name} — ${site.role}`}>
+  <main id="content">
+    <section class="hero wrap">
+      <h1>
+        <span>Justin</span>
+        <span class="name-last">Struk</span>
+      </h1>
+      <div class="role-row">
+        <p>{site.role}</p>
+        <p>{site.location}</p>
+      </div>
+      <div class="hero-grid">
+        <div class="bio">
+          {site.bio.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+        <div class="portrait">
+          <img src="/avatar.jpg" alt="Illustrated portrait of Justin Struk" width="1024" height="1024" />
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="work">
+      <div class="wrap">
+        <div class="section-head work-head" data-reveal>
+          <div>
+            <h2>Selected work</h2>
+            <p class="section-note">Click the card for details, or “See it live” to visit.</p>
+          </div>
+          <p>{String(projects.length).padStart(2, '0')}</p>
+        </div>
+        <div class="projects">
+          {projects.map((project, index) => (
+            <ProjectCard project={project} index={index} />
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="experience">
+      <div class="wrap">
+        <div class="section-head" data-reveal>
+          <h2>Experience</h2>
+          <p>Vehikl and before</p>
+        </div>
+        <div class="jobs">
+          {experience.map((job) => (
+            <article class="job" data-reveal>
+              <p class="job-when">{job.start} — {job.end}</p>
+              <div>
+                <h3>{job.role}</h3>
+                <p class="job-meta">
+                  {job.url ? <a href={job.url}>{job.company}</a> : job.company}
+                  <span> · {job.place}</span>
+                </p>
+                <p class="job-summary">{job.summary}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="wrap contact" data-reveal>
+        <p class="kicker">Contact</p>
+        <h2>Say hello.</h2>
+        <p class="contact-lead">
+          I’m always open to discussing new ideas, tech, or collaboration opportunities.
+        </p>
+        <a class="contact-mail" href={`mailto:${site.email}`}>{site.email}</a>
+        <div class="contact-row">
+          <Pill href={site.linkedin} label="LinkedIn" external />
+          <Pill href={site.github} label="GitHub" external />
+        </div>
+      </div>
+    </section>
+  </main>
+</Base>

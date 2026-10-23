@@ -1,0 +1,25 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Pill from './Pill.astro';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  index: number;
+}
+
+const { project, index } = Astro.props;
+const number = String(index + 1).padStart(2, '0');
+---
+
+<article class="card-shell" data-reveal>
+  <div class="card-inner">
+    <a class="card-link" href={`/projects/${project.id}`}>
+      <span class="num">{number}</span>
+      <span class="card-copy">
+        <h2 transition:name={`project-${project.id}`}>{project.data.title}</h2>
+        <p>{project.data.summary}</p>
+      </span>
+    </a>
+    <Pill href={project.data.liveUrl} label={project.data.liveLabel} external />
+  </div>
+</article>

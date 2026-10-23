@@ -1,0 +1,22 @@
+---
+interface Props {
+  href: string;
+  label: string;
+  external?: boolean;
+}
+
+const { href, label, external = false } = Astro.props;
+---
+
+<a
+  class="pill"
+  href={href}
+  {...external ? { target: '_blank', rel: 'noreferrer' } : {}}
+>
+  <span>{label}</span>
+  <span class="pill-icon" aria-hidden="true">
+    <svg viewBox="0 0 16 16" fill="none">
+      <path d="M4 12L12 4M12 4H6.5M12 4V9.5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+  </span>
+</a>

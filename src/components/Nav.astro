@@ -1,0 +1,47 @@
+---
+const links = [
+  { href: '/#work', label: 'Work' },
+  { href: '/#experience', label: 'Experience' },
+  { href: '/#contact', label: 'Contact' },
+];
+---
+
+<header>
+  <a class="skip" href="#content">Skip to content</a>
+  <nav class="nav" aria-label="Primary">
+    <a class="wordmark" href="/">Justin <span>Struk</span></a>
+    <div class="nav-links">
+      {links.map((link) => (
+        <a href={link.href}>{link.label}</a>
+      ))}
+    </div>
+    <button
+      class="nav-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="menu"
+      data-menu
+    >
+      <span class="nav-bars"></span>
+      <span class="sr-only">Menu</span>
+    </button>
+  </nav>
+  <div class="menu" id="menu" data-menu-panel hidden>
+    {links.map((link) => (
+      <a href={link.href}>{link.label}</a>
+    ))}
+  </div>
+</header>
+
+<style>
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+  }
+</style>

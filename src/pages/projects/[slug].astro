@@ -1,0 +1,54 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Pill from '../../components/Pill.astro';
+
+export async function getStaticPaths() {
+  const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+  return projects.map((project, index) => ({
+    params: { slug: project.id },
+    props: { project, index },
+  }));
+}
+
+const { project, index } = Astro.props;
+const { Content } = await render(project);
+const number = String(index + 1).padStart(2, '0');
+---
+
+<Base title={`${project.data.title} — Justin Struk`} description={project.data.summary}>
+  <main id="content" class="project-page wrap">
+    <a class="back" href="/#work">← All work</a>
+    <header class="project-top">
+      <p class="kicker">{number}</p>
+      <h1 transition:name={`project-${project.id}`}>{project.data.title}</h1>
+      <p class="lede">{project.data.summary}</p>
+      <div class="actions">
+        <Pill href={project.data.liveUrl} label={project.data.liveLabel} external />
+        {project.data.repoUrl && <Pill href={project.data.repoUrl} label="GitHub" external />}
+      </div>
+    </header>
+
+    <div class="project-split">
+      <article class="prose">
+        <Content />
+      </article>
+      <aside class="aside">
+        <div class="block">
+          <h2>Includes</h2>
+          <ul>
+            {project.data.highlights.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+        {project.data.stack.length > 0 && (
+          <div class="block">
+            <h2>Stack</h2>
+            <ul>
+              {project.data.stack.map((item) => <li>{item}</li>)}
+            </ul>
+          </div>
+        )}
+      </aside>
+    </div>
+  </main>
+</Base>

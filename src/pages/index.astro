@@ -29,11 +29,11 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
       </div>
     </section>
 
-    <section class="section" id="work">
+    <section class="section" id="projects">
       <div class="wrap">
         <div class="section-head work-head" data-reveal>
           <div>
-            <h2>Selected work</h2>
+            <h2>Projects</h2>
             <p class="section-note">Click the card for details, or “See it live” to visit.</p>
           </div>
           <p>{String(projects.length).padStart(2, '0')}</p>

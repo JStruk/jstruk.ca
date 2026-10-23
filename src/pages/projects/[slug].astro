@@ -18,7 +18,7 @@ const number = String(index + 1).padStart(2, '0');
 
 <Base title={`${project.data.title} — Justin Struk`} description={project.data.summary}>
   <main id="content" class="project-page wrap">
-    <a class="back" href="/#work">← All work</a>
+    <a class="back" href="/#projects">← All projects</a>
     <header class="project-top">
       <p class="kicker">{number}</p>
       <h1 transition:name={`project-${project.id}`}>{project.data.title}</h1>
